@@ -23,6 +23,17 @@ app.get('/api/ingredients', function ingredientIndex(req, res){
   })
 })
 
+app.get('/api/recipes', function recipeIndex(req, res){
+  db.Recipe.find({}, function index(err, recipe){
+    if(err){
+      console.log('index error ' + err);
+    }
+  })
+  .populate('ingredients').exec(function(err, recipes){
+    res.json(recipes);
+  })
+})
+
 app.post('/api/ingredients', controllers.ingredients.create);
 
 
