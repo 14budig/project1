@@ -9,9 +9,7 @@ $(document).ready(function(){
       method: 'POST',
       url: '/api/ingredients',
       data: data,
-      success: function(json){
-        console.log(json);
-      }
+      success: addIngredient
     });
   });
   $('#newRecipeForm').on('submit', function(e){
@@ -65,25 +63,25 @@ $(document).ready(function(){
   function handleIngredients(json){
     ingredientList = json;
     console.log(json);
-    renderIngredient(json);
+    json.forEach(function(ingredient){
+      renderIngredient(ingredient);
+    });
     renderDropdowns(json);
   }
 
   function handleRecipes(json){
     console.log(json);
-    json.forEach(function(item){
-      renderRecipe(item);
+    json.forEach(function(recipe){
+      renderRecipe(recipe);
     })
     // renderRecipe(json);
   }
 
   function renderIngredient(ingredient){
-    console.log(ingredient[0].name)
-    ingredient.forEach(function (drink){
-      console.log(drink.name);
-      var ingredientHtml = template(drink);
-      $('#ingredients').append(ingredientHtml);
-    })
+    console.log(ingredient.name)
+
+    var ingredientHtml = template(ingredient);
+    $('#ingredients').append(ingredientHtml);
   }
   function renderDropdowns(ingredients){
     console.log(ingredients);
@@ -94,6 +92,14 @@ $(document).ready(function(){
   function addRecipe(recipe){
     renderRecipe(recipe);
     $('#newRecipeForm').trigger('reset');
+    $('#dropdown-list').empty();
+    renderDropdowns(ingredientList);
+  }
+
+  function addIngredient(ingredient){
+    $('#newIngredientForm').trigger('reset');
+    renderIngredient(ingredient);
+    ingredientList.push(ingredient);
     $('#dropdown-list').empty();
     renderDropdowns(ingredientList);
   }
