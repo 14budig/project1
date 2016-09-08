@@ -18,9 +18,7 @@
 
 </head>
 <body>
-<<<<<<< HEAD
 
-=======
   <form class="form-inline" id="newIngredientForm">
    <div class="form-group">
      <label for="title">Ingredient Name</label>
@@ -32,18 +30,28 @@
    </div>
    <button type="submit" class="btn btn-default">Add ingredient</button>
   </form>
->>>>>>> 0682ba1b982f53b16dbe4d14dfeb407724776eeb
 
   <!-- handlebars container -->
   <div id="ingredients" class="container">
     <ul>
     <!-- handlebars template -->
     <script id="ingredients-template" type="text/x-handlebars-template">
-
       <li>{{name}}</li>
-
     </script>
     </ul>
+  </div>
+
+  <!-- handlebars container -->
+  <div id="recipes" class="container">
+
+    <!-- handlebars template -->
+    <script id="recipes-template" type="text/x-handlebars-template">
+    <ul>{{name}}
+    {{#each ingredients}}
+      <li>{{name}}</li>
+    {{/each}}
+      </ul>
+    </script>
   </div>
 </body>
 </html>
