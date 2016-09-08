@@ -23,7 +23,7 @@ app.get('/', function homepage (req, res) {
 });
 
 app.get('/api/ingredients', function ingredient(req, res){
-  res.send(newIngredients);
+  res.json(newIngredients);
 })
 
 
