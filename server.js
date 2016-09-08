@@ -11,7 +11,7 @@ app.get('/', function homepage (req, res) {
 });
 
 
-
+app.post('/api/ingredients', controllers.ingredients.create);
 
 
 // listen on port 3000
