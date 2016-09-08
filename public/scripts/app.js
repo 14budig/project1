@@ -1,5 +1,6 @@
 
 $(document).ready(function(){
+  var ingredientList;
 
   $('#newIngredientForm').on('submit', function(e){
     e.preventDefault();
@@ -16,14 +17,19 @@ $(document).ready(function(){
   $('#newRecipeForm').on('submit', function(e){
     e.preventDefault();
     var data = $(this).serialize();
-    $.ajax({
-      method: 'POST',
-      url: '/api/recipes',
-      data: data,
-      success: function(json){
-        console.log(json);
-      }
-    });
+    console.log(data);
+    // $.ajax({
+    //   method: 'POST',
+    //   url: '/api/recipes',
+    //   data: data,
+    //   success: function(json){
+    //     console.log(json);
+    //   }
+    // });
+  });
+  $('#add-dropdown').on('click', function(e){
+    e.preventDefault();
+    renderDropdowns(ingredientList);
   });
 
   var source = $('#ingredients-template').html();
@@ -31,6 +37,9 @@ $(document).ready(function(){
 
   var source2 = $('#recipes-template').html();
   var template2 = Handlebars.compile(source2);
+
+  var dropSource = $('#ingredients-list').html();
+  var dropTemplate = Handlebars.compile(dropSource);
 
 
   $.ajax({
@@ -46,8 +55,10 @@ $(document).ready(function(){
   })
 
   function handleIngredients(json){
+    ingredientList = json;
     console.log(json);
     renderIngredient(json);
+    renderDropdowns(json);
   }
 
   function handleRecipes(json){
@@ -62,6 +73,11 @@ $(document).ready(function(){
       var ingredientHtml = template(drink);
       $('#ingredients').append(ingredientHtml);
     })
+  }
+  function renderDropdowns(ingredients){
+    console.log(ingredients);
+    var dropdownHtml = dropTemplate({ingredient: ingredients});
+      $('#dropdown-list').append(dropdownHtml);
   }
 
   function renderRecipe(recipe){

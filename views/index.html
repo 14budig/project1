@@ -54,7 +54,16 @@
    </div>
    <div class="form-group">
      <label for="title">Ingredients</label>
-     <input type="text" class="form-control" name="ingredients" placeholder="Ingredients">
+     <div id="dropdown-list">
+       <script id="ingredients-list", type="text/x-handlebars-template">
+         <select name="ingredients">
+          {{#each ingredient}}
+            <option value="{{name}}">{{name}}</option>
+          {{/each}}
+         </select>
+       </script>
+     </div>
+     <button type="button" class="btn, btn-primary" id="add-dropdown" name="more-ingredients">+</button>
    </div>
    <button type="submit" class="btn btn-default">Add Recipe</button>
   </form>
