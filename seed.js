@@ -2,12 +2,12 @@ var db = require('./models');
 
 var newIngredients = [
   {
-    name: Whiskey,
-    description: distilled alcoholic beverage
+    name: 'Whiskey',
+    description: 'distilled alcoholic beverage'
   },
   {
-    name: Vermouth,
-    description: fortified wine
+    name: 'Vermouth',
+    description: 'fortified wine'
   }
 ];
 

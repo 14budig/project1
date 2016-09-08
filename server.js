@@ -6,10 +6,25 @@ app.use(express.static(__dirname + '/public'));
 
 var controllers = require('./controllers');
 
+var newIngredients = [
+  {
+    name: 'Whiskey',
+    description: 'distilled alcoholic beverage'
+  },
+  {
+    name: 'Vermouth',
+    description: 'fortified wine'
+  }
+];
+
+
 app.get('/', function homepage (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/api/ingredients', function ingredient(req, res){
+  res.send(newIngredients);
+})
 
 
 
