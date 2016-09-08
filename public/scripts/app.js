@@ -16,16 +16,26 @@ $(document).ready(function(){
   });
   $('#newRecipeForm').on('submit', function(e){
     e.preventDefault();
-    var data = $(this).serialize();
+    var data = {
+      name: $('#recipe-name').val(),
+      description: $('#recipe-desc').val()
+    }
+    var metaIngredients = $('.ingredient-dropdown');
+    var ingredients = [];
+    for(var i = 0; i < metaIngredients.length; i++){
+      ingredients.push($(metaIngredients[0]).val());
+    }
+    console.log(ingredients);
+    data.ingredients = ingredients;
     console.log(data);
-    // $.ajax({
-    //   method: 'POST',
-    //   url: '/api/recipes',
-    //   data: data,
-    //   success: function(json){
-    //     console.log(json);
-    //   }
-    // });
+    $.ajax({
+      method: 'POST',
+      url: '/api/recipes',
+      data: data,
+      success: function(json){
+        console.log(json);
+      }
+    });
   });
   $('#add-dropdown').on('click', function(e){
     e.preventDefault();

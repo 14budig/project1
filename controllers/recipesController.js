@@ -7,7 +7,7 @@ function create(req, res){
     name: name,
     description: desc
   });
-  var ingList = req.body.ingredients.split(',').map(function(item) { return item.trim(); } );
+  var ingList = req.body.ingredients;
   db.Ingredient.find({
     name: {$in: ingList}
   }, function (err, ingredients){
