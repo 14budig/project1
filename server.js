@@ -35,7 +35,7 @@ app.get('/api/recipes', function recipeIndex(req, res){
 })
 
 app.post('/api/ingredients', controllers.ingredients.create);
-
+app.post('/api/recipes', controllers.recipes.create)
 
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {

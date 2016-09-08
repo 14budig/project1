@@ -2,13 +2,23 @@
 $(document).ready(function(){
 
   $('#newIngredientForm').on('submit', function(e){
-    //Uncaught SyntaxError: Unexpected identifier
-    //why?
     e.preventDefault();
     var data = $(this).serialize();
     $.ajax({
       method: 'POST',
       url: '/api/ingredients',
+      data: data,
+      success: function(json){
+        console.log(json);
+      }
+    });
+  });
+  $('#newRecipeForm').on('submit', function(e){
+    e.preventDefault();
+    var data = $(this).serialize();
+    $.ajax({
+      method: 'POST',
+      url: '/api/recipes',
       data: data,
       success: function(json){
         console.log(json);
