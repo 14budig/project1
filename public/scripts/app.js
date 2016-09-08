@@ -1,4 +1,9 @@
 $(document).ready(function(){
+
+  var source = $('#ingredients-template').html();
+  var template = Handlebars.compile(source);
+
+
   $.ajax({
     method: 'GET',
     url: '/api/ingredients',
@@ -7,6 +12,16 @@ $(document).ready(function(){
 
   function onSuccess(json){
     console.log(json)
-    $('body').append(json);
+    render(json);
+
+  }
+
+  function render(ingredient){
+    console.log(ingredient[0].name)
+    ingredient.forEach(function (drink){
+      console.log(drink.name);
+      var ingredientHtml = template(drink);
+      $('#ingredients').append(ingredientHtml);
+    })
   }
 })
