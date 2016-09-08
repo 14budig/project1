@@ -6,24 +6,19 @@ app.use(express.static(__dirname + '/public'));
 
 var controllers = require('./controllers');
 
-var newIngredients = [
-  {
-    name: 'Whiskey',
-    description: 'distilled alcoholic beverage'
-  },
-  {
-    name: 'Vermouth',
-    description: 'fortified wine'
-  }
-];
-
+var db = require('./models');
 
 app.get('/', function homepage (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get('/api/ingredients', function ingredient(req, res){
-  res.json(newIngredients);
+app.get('/api/ingredients', function ingredientIndex(req, res){
+  db.Ingredient.find({}, function index(err, ingredient){
+    if(err){
+      console.log('index error ' + err);
+    }
+    res.json(ingredient);
+  })
 })
 
 
