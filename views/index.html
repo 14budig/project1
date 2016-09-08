@@ -76,11 +76,14 @@
 
     <!-- handlebars template -->
     <script id="recipes-template" type="text/x-handlebars-template">
-    <ul>{{name}}
-    {{#each ingredients}}
-      <li>{{name}}</li>
-    {{/each}}
-      </ul>
+      <div data-recipe-id={{_id}}>
+        <ul>{{name}}
+        {{#each ingredients}}
+          <li>{{name}}</li>
+        {{/each}}
+        </ul>
+        <button type="button" class="btn btn-default">Edit Recipe</button>
+      </div>
     </script>
   </div>
 </body>

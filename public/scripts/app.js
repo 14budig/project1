@@ -32,9 +32,7 @@ $(document).ready(function(){
       method: 'POST',
       url: '/api/recipes',
       data: data,
-      success: function(json){
-        console.log(json);
-      }
+      success: addRecipe
     });
   });
   $('#add-dropdown').on('click', function(e){
@@ -73,7 +71,10 @@ $(document).ready(function(){
 
   function handleRecipes(json){
     console.log(json);
-    renderRecipe(json);
+    json.forEach(function(item){
+      renderRecipe(item);
+    })
+    // renderRecipe(json);
   }
 
   function renderIngredient(ingredient){
@@ -90,12 +91,19 @@ $(document).ready(function(){
       $('#dropdown-list').append(dropdownHtml);
   }
 
+  function addRecipe(recipe){
+    renderRecipe(recipe);
+    $('#newRecipeForm').trigger('reset');
+    $('#dropdown-list').empty();
+    renderDropdowns(ingredientList);
+  }
+
   function renderRecipe(recipe){
     //console.log(recipe[0].name)
-    recipe.forEach(function (recipe){
-      console.log(recipe);
+    // recipe.forEach(function (recipe){
+    //   console.log(recipe);
       var recipeHtml = template2(recipe);
       $('#recipes').append(recipeHtml);
-    })
+    // })
   }
 })

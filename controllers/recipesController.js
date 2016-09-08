@@ -28,7 +28,10 @@ function update(req, res){
       description: req.body.description,
       ingredients: ingList
     }}, {new: true}, function(error, newRecipe){
-      
+      if(error){
+        res.status(500).send(err);
+      }
+      res.json(newRecipe);
     });
   });
 }
