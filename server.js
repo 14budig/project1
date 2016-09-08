@@ -1,8 +1,10 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var controllers = require('./controllers');
 
@@ -21,7 +23,7 @@ app.get('/api/ingredients', function ingredientIndex(req, res){
   })
 })
 
-
+app.post('/api/ingredients', controllers.ingredients.create);
 
 
 // listen on port 3000
