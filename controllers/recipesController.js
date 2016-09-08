@@ -21,6 +21,15 @@ function create(req, res){
   });
 }
 
+function show(req, res){
+  db.Recipe.findOne({_id: req.params.recipeId}).populate('ingredients').exec(function(err, recipe){
+    if(err) {
+      res.status(500).send(err);
+    }
+    res.json(recipe);
+  });
+}
+
 function update(req, res){
   db.Ingredient.find({name: {$in: req.body.ingredients}}, function(err, ingList){
     db.Recipe.findOneAndUpdate({_id: req.params.recipeId}, {$set: {
@@ -38,5 +47,6 @@ function update(req, res){
 
 module.exports = {
   create: create,
-  update: update
+  update: update,
+  show: show
 }

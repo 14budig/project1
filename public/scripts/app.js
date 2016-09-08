@@ -12,6 +12,7 @@ $(document).ready(function(){
       success: addIngredient
     });
   });
+
   $('#newRecipeForm').on('submit', function(e){
     e.preventDefault();
     var data = {
@@ -33,10 +34,31 @@ $(document).ready(function(){
       success: addRecipe
     });
   });
+
   $('#add-dropdown').on('click', function(e){
     e.preventDefault();
     renderDropdowns(ingredientList);
   });
+
+  $('#recipes').on('click', '.edit', function(e){
+    e.preventDefault();
+    var id = $(this).closest(".recipe").data('recipeId');
+    $('#editRecipesModal').data('recipeId, id');
+    console.log(id);
+    $.ajax({
+      method: 'GET',
+      url: '/api/recipes/' + id,
+      success: function(json){
+        var modalHtml = modTemplate(json);
+        console.log(modalHtml);
+        $('#editRecipesModalBody').html(modalHtml);
+      }
+    })
+     $('#editRecipesModal').modal();
+  })
+
+  var modSource = $('#recipe-edit-template').html();
+  var modTemplate = Handlebars.compile(modSource);
 
   var source = $('#ingredients-template').html();
   var template = Handlebars.compile(source);
