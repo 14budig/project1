@@ -6,5 +6,7 @@ $(document).ready(function(){
   })
 
   function onSuccess(json){
+    console.log(json)
     $('body').append(json);
   }
+})
