@@ -23,7 +23,7 @@ $(document).ready(function(){
     var metaIngredients = $('.ingredient-dropdown');
     var ingredients = [];
     for(var i = 0; i < metaIngredients.length; i++){
-      ingredients.push($(metaIngredients[0]).val());
+      ingredients.push($(metaIngredients[i]).val());
     }
     console.log(ingredients);
     data.ingredients = ingredients;
