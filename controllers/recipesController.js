@@ -19,10 +19,24 @@ function create(req, res){
       res.json(recipe);
     })
   });
+}
 
-
+function update(req, res){
+  db.Ingredient.find({name: {$in: req.body.ingredients}}, function(err, ingList){
+    db.Recipe.findOneAndUpdate({_id: req.params.recipeId}, {$set: {
+      name: req.body.name,
+      description: req.body.description,
+      ingredients: ingList
+    }}, {new: true}, function(error, newRecipe){
+      if(error){
+        res.status(500).send(err);
+      }
+      res.json(newRecipe);
+    });
+  });
 }
 
 module.exports = {
-  create: create
+  create: create,
+  update: update
 }
