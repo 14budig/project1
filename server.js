@@ -29,10 +29,12 @@ app.get('/api/recipes', function recipeIndex(req, res){
       console.log('index error ' + err);
     }
   })
-  .populate('ingredients').exec(function(err, recipes){
+  .limit(20).populate('ingredients').exec(function(err, recipes){
     res.json(recipes);
   })
 })
+
+app.get('/api/recipes/search', controllers.recipes.findAll);
 
 app.get('/api/recipes/:recipeId', controllers.recipes.show);
 
