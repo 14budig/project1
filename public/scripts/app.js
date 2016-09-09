@@ -97,6 +97,17 @@ $(document).ready(function(){
     });
   });
 
+$('.modal-body').on('click','#modal-add-dropdown', function(e){
+  console.log('click');
+  e.preventDefault();
+   var dropdown = dropTemplate({ingredient: ingredientList});
+   console.log(dropdown);
+   var listItem = '<li></li>';
+ $('#modal-ingredient-list').append(listItem);
+ $('#modal-ingredient-list').children().last().html(dropdown);
+})
+
+// ----------------------------------//
   $.ajax({
     method: 'GET',
     url: '/api/ingredients',
