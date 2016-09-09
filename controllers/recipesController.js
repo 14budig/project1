@@ -45,8 +45,15 @@ function update(req, res){
   });
 }
 
+function destroy(req, res){
+  db.Recipe.findOneAndRemove({_id: req.params.recipeId}, function(err, deleteRecipe){
+    res.json(deleteRecipe);
+  });
+}
+
 module.exports = {
   create: create,
   update: update,
-  show: show
+  show: show,
+  destroy: destroy
 }

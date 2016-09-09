@@ -50,11 +50,25 @@ $(document).ready(function(){
       url: '/api/recipes/' + id,
       success: function(json){
         var modalHtml = modTemplate(json);
-        console.log(modalHtml);
+        //console.log(modalHtml);
         $('#editRecipesModalBody').html(modalHtml);
       }
     })
      $('#editRecipesModal').modal();
+  })
+
+  $('#recipes').on('click', '.delete', function(e){
+    e.preventDefault();
+    var id = $(this).closest(".recipe").data('recipeId');
+    console.log("delete ", id);
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/recipes/' + id,
+      success: function(json){
+        $('div[data-recipe-id=' + id + ']').remove();
+      }
+    })
+
   })
 
   var modSource = $('#recipe-edit-template').html();
