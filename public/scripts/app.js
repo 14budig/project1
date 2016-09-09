@@ -1,6 +1,19 @@
 
 $(document).ready(function(){
   var ingredientList;
+  var modSource = $('#recipe-edit-template').html();
+  var modTemplate = Handlebars.compile(modSource);
+
+  var source = $('#ingredients-template').html();
+  var template = Handlebars.compile(source);
+
+  var source2 = $('#recipes-template').html();
+  var template2 = Handlebars.compile(source2);
+
+  var dropSource = $('#ingredients-list').html();
+  var dropTemplate = Handlebars.compile(dropSource);
+
+
 
   $('#newIngredientForm').on('submit', function(e){
     e.preventDefault();
@@ -24,9 +37,7 @@ $(document).ready(function(){
     for(var i = 0; i < metaIngredients.length; i++){
       ingredients.push($(metaIngredients[i]).val());
     }
-    console.log(ingredients);
     data.ingredients = ingredients;
-    console.log(data);
     $.ajax({
       method: 'POST',
       url: '/api/recipes',
@@ -40,19 +51,21 @@ $(document).ready(function(){
     renderDropdowns(ingredientList);
   });
 
+  $('#remove-dropdown').on('click', function(e){
+    e.preventDefault();
+    if($('#dropdown-list').children('select').toArray().length > 1){
+      $('#dropdown-list').children('select').last().remove();
+    }
+  })
+
   $('#recipes').on('click', '.edit', function(e){
     e.preventDefault();
     var id = $(this).closest(".recipe").data('recipeId');
-    $('#editRecipesModal').data('recipeId, id');
-    console.log(id);
+    $('#editRecipesModal').data('recipeId', id);
     $.ajax({
       method: 'GET',
       url: '/api/recipes/' + id,
-      success: function(json){
-        var modalHtml = modTemplate(json);
-        //console.log(modalHtml);
-        $('#editRecipesModalBody').html(modalHtml);
-      }
+      success: renderModal
     })
      $('#editRecipesModal').modal();
   })
@@ -60,7 +73,6 @@ $(document).ready(function(){
   $('#recipes').on('click', '.delete', function(e){
     e.preventDefault();
     var id = $(this).closest(".recipe").data('recipeId');
-    console.log("delete ", id);
     $.ajax({
       method: 'DELETE',
       url: '/api/recipes/' + id,
@@ -71,19 +83,43 @@ $(document).ready(function(){
 
   })
 
-  var modSource = $('#recipe-edit-template').html();
-  var modTemplate = Handlebars.compile(modSource);
+  $('#editRecipesModalSubmit').on('click', function(e){
+    e.preventDefault();
+    var data = {
+      name: $('#edit-recipe-name').val(),
+      description: $('#edit-recipe-desc').val()
+    }
+    var metaIngredients = $('#editRecipesModal .ingredient-dropdown');
+    var ingredients = [];
+    for(var i = 0; i < metaIngredients.length; i++){
+      ingredients.push($(metaIngredients[i]).val());
+    }
+    data.ingredients = ingredients;
+    var id = $('#editRecipesModal').data('recipeId');
+    $.ajax({
+      method: 'PUT',
+      url: '/api/recipes/' + id,
+      data: data,
+      success: handleEdit
+    });
+  });
 
-  var source = $('#ingredients-template').html();
-  var template = Handlebars.compile(source);
+$('.modal-body').on('click','#modal-add-dropdown', function(e){
+  e.preventDefault();
+   var dropdown = dropTemplate({ingredient: ingredientList});
+   var listItem = '<li></li>';
+ $('#modal-ingredient-list').append(listItem);
+ $('#modal-ingredient-list').children().last().html(dropdown);
+});
 
-  var source2 = $('#recipes-template').html();
-  var template2 = Handlebars.compile(source2);
+$('.modal-body').on('click','#modal-remove-dropdown', function(e){
+  e.preventDefault();
+  if($('#modal-ingredient-list').children('li').toArray().length > 1){
+    $('#modal-ingredient-list').children('li').last().remove();
+  }
+});
 
-  var dropSource = $('#ingredients-list').html();
-  var dropTemplate = Handlebars.compile(dropSource);
-
-
+// ----------------------------------//
   $.ajax({
     method: 'GET',
     url: '/api/ingredients',
@@ -98,7 +134,6 @@ $(document).ready(function(){
 
   function handleIngredients(json){
     ingredientList = json;
-    //console.log(json);
     json.forEach(function(ingredient){
       renderIngredient(ingredient);
     });
@@ -106,7 +141,6 @@ $(document).ready(function(){
   }
 
   function handleRecipes(json){
-    //console.log(json);
     json.forEach(function(recipe){
       renderRecipe(recipe);
     })
@@ -114,13 +148,11 @@ $(document).ready(function(){
   }
 
   function renderIngredient(ingredient){
-    //console.log(ingredient.name)
 
     var ingredientHtml = template(ingredient);
     $('#ingredients').append(ingredientHtml);
   }
   function renderDropdowns(ingredients){
-    //console.log(ingredients);
     var dropdownHtml = dropTemplate({ingredient: ingredients});
       $('#dropdown-list').append(dropdownHtml);
   }
@@ -141,11 +173,28 @@ $(document).ready(function(){
   }
 
   function renderRecipe(recipe){
-    //console.log(recipe[0].name)
-    // recipe.forEach(function (recipe){
-    //   console.log(recipe);
       var recipeHtml = template2(recipe);
       $('#recipes').append(recipeHtml);
-    // })
   }
+
+  function renderModal(json){
+    var modalHtml = modTemplate(json);
+    $('#editRecipesModalBody').html(modalHtml);
+    var ingredients = $('.modal-ingredient').toArray();
+    ingredients.forEach(function(item, index, ingredients){
+      var selected = $(item).html();
+      var dropdown = dropTemplate({ingredient: ingredientList});
+      $(ingredients[index]).html(dropdown);
+      var options = $(ingredients[index]).find('select');
+      $(options).val(selected).attr('selected', true);
+    });
+  }
+
+  function handleEdit(json){
+    $('#editRecipesModal').modal('hide');
+    var $recipe = $('div[data-recipe-id=' + json._id + ']');
+    var updatedHtml = template2(json);
+    $recipe.html(updatedHtml);
+  }
+
 })

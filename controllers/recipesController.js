@@ -36,7 +36,7 @@ function update(req, res){
       name: req.body.name,
       description: req.body.description,
       ingredients: ingList
-    }}, {new: true}, function(error, newRecipe){
+    }}, {new: true}).populate("ingredients").exec(function(error, newRecipe){
       if(error){
         res.status(500).send(err);
       }
