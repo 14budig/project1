@@ -51,6 +51,13 @@ $(document).ready(function(){
     renderDropdowns(ingredientList);
   });
 
+  $('#remove-dropdown').on('click', function(e){
+    e.preventDefault();
+    if($('#dropdown-list').children('select').toArray().length > 1){
+      $('#dropdown-list').children('select').last().remove();
+    }
+  })
+
   $('#recipes').on('click', '.edit', function(e){
     e.preventDefault();
     var id = $(this).closest(".recipe").data('recipeId');
@@ -98,14 +105,19 @@ $(document).ready(function(){
   });
 
 $('.modal-body').on('click','#modal-add-dropdown', function(e){
-  console.log('click');
   e.preventDefault();
    var dropdown = dropTemplate({ingredient: ingredientList});
-   console.log(dropdown);
    var listItem = '<li></li>';
  $('#modal-ingredient-list').append(listItem);
  $('#modal-ingredient-list').children().last().html(dropdown);
-})
+});
+
+$('.modal-body').on('click','#modal-remove-dropdown', function(e){
+  e.preventDefault();
+  if($('#modal-ingredient-list').children('li').toArray().length > 1){
+    $('#modal-ingredient-list').children('li').last().remove();
+  }
+});
 
 // ----------------------------------//
   $.ajax({
