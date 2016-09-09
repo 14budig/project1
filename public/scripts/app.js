@@ -13,6 +13,8 @@ $(document).ready(function(){
   var dropSource = $('#ingredients-list').html();
   var dropTemplate = Handlebars.compile(dropSource);
 
+  getAllRecipes();
+
 
 
   $('#newIngredientForm').on('submit', function(e){
@@ -119,6 +121,23 @@ $('.modal-body').on('click','#modal-remove-dropdown', function(e){
   }
 });
 
+$('#search-recipes').on('submit', function(e){
+  e.preventDefault();
+  var query = $(this).serialize();
+  console.log(query.length);
+  if(query.length <= 5){
+    $('#recipes').empty();
+    getAllRecipes();
+  }
+  else{
+    $.ajax({
+      method: 'GET',
+      url:'/api/recipes/search?' + query,
+      success: handleSearch
+    })
+  }
+});
+
 // ----------------------------------//
   $.ajax({
     method: 'GET',
@@ -126,11 +145,15 @@ $('.modal-body').on('click','#modal-remove-dropdown', function(e){
     success: handleIngredients
   })
 
-  $.ajax({
-    method: 'GET',
-    url: '/api/recipes',
-    success: handleRecipes
-  })
+
+
+  function getAllRecipes(){
+    $.ajax({
+      method: 'GET',
+      url: '/api/recipes',
+      success: handleRecipes
+    })
+  }
 
   function handleIngredients(json){
     ingredientList = json;
@@ -141,9 +164,14 @@ $('.modal-body').on('click','#modal-remove-dropdown', function(e){
   }
 
   function handleRecipes(json){
-    json.forEach(function(recipe){
-      renderRecipe(recipe);
-    })
+    if(json.length > 0){
+      json.forEach(function(recipe){
+        renderRecipe(recipe);
+      })
+    }
+    else{
+      $('#recipes').append('<h2>Sorry, your search returned no results</h2>');
+    }
     // renderRecipe(json);
   }
 
@@ -195,6 +223,11 @@ $('.modal-body').on('click','#modal-remove-dropdown', function(e){
     var $recipe = $('div[data-recipe-id=' + json._id + ']');
     var updatedHtml = template2(json);
     $recipe.html(updatedHtml);
+  }
+
+  function handleSearch(data){
+    $('#recipes').empty();
+    handleRecipes(data);
   }
 
 })
