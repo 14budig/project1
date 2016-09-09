@@ -1,6 +1,19 @@
 
 $(document).ready(function(){
   var ingredientList;
+  var modSource = $('#recipe-edit-template').html();
+  var modTemplate = Handlebars.compile(modSource);
+
+  var source = $('#ingredients-template').html();
+  var template = Handlebars.compile(source);
+
+  var source2 = $('#recipes-template').html();
+  var template2 = Handlebars.compile(source2);
+
+  var dropSource = $('#ingredients-list').html();
+  var dropTemplate = Handlebars.compile(dropSource);
+
+
 
   $('#newIngredientForm').on('submit', function(e){
     e.preventDefault();
@@ -48,11 +61,7 @@ $(document).ready(function(){
     $.ajax({
       method: 'GET',
       url: '/api/recipes/' + id,
-      success: function(json){
-        var modalHtml = modTemplate(json);
-        //console.log(modalHtml);
-        $('#editRecipesModalBody').html(modalHtml);
-      }
+      success: renderModal
     })
      $('#editRecipesModal').modal();
   })
@@ -70,19 +79,6 @@ $(document).ready(function(){
     })
 
   })
-
-  var modSource = $('#recipe-edit-template').html();
-  var modTemplate = Handlebars.compile(modSource);
-
-  var source = $('#ingredients-template').html();
-  var template = Handlebars.compile(source);
-
-  var source2 = $('#recipes-template').html();
-  var template2 = Handlebars.compile(source2);
-
-  var dropSource = $('#ingredients-list').html();
-  var dropTemplate = Handlebars.compile(dropSource);
-
 
   $.ajax({
     method: 'GET',
@@ -147,5 +143,20 @@ $(document).ready(function(){
       var recipeHtml = template2(recipe);
       $('#recipes').append(recipeHtml);
     // })
+  }
+
+  function renderModal(json){
+    var modalHtml = modTemplate(json);
+    //console.log(modalHtml);
+    $('#editRecipesModalBody').html(modalHtml);
+    var ingredients = $('.modal-ingredient').toArray();
+    ingredients.forEach(function(item, index, ingredients){
+      var selected = $(item).html();
+      var dropdown = dropTemplate({ingredient: ingredientList});
+      $(ingredients[index]).html(dropdown);
+      var options = $(ingredients[index]).find('select');
+      $(options).val(selected).attr('selected', true);
+    });
+
   }
 })
