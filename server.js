@@ -34,6 +34,8 @@ app.get('/api/recipes', function recipeIndex(req, res){
   })
 })
 
+app.get('/api/recipes/search', controllers.recipes.findAll);
+
 app.get('/api/recipes/:recipeId', controllers.recipes.show);
 
 app.post('/api/ingredients', controllers.ingredients.create);

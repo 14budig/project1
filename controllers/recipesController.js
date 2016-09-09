@@ -54,7 +54,18 @@ function destroy(req, res){
   });
 }
 
+function findAll(req, res){
+  db.Recipe.find({name: req.query.name}).populate('ingredients').exec(function(err, recipes){
+    console.log(req.query.name);
+    if(err) {
+      res.status(500).send(err);
+    }
+    res.json(recipes);
+  });
+}
+
 module.exports = {
+  findAll: findAll,
   create: create,
   update: update,
   show: show,
