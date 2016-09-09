@@ -58,6 +58,7 @@
 
      <div class="form-group">
        <label for="title">Ingredients</label>
+       <button type="button" class="btn, btn-primary" id="add-dropdown" name="more-ingredients">+</button>
        <div id="dropdown-list">
          <script id="ingredients-list", type="text/x-handlebars-template">
            <select class="ingredient-dropdown" name="ingredients">
@@ -67,7 +68,6 @@
            </select>
          </script>
        </div>
-       <button type="button" class="btn, btn-primary" id="add-dropdown" name="more-ingredients">+</button>
      </div>
      <button type="submit" class="btn btn-default">Add Recipe</button>
     </form>
@@ -135,7 +135,7 @@
        <div id="modal-ingredient-list">
          <ul>
            {{#each ingredients}}
-            <li>{{name}}</li>
+            <li class="modal-ingredient">{{name}}</li>
             {{/each}}
          </ul>
 
