@@ -34,10 +34,13 @@ app.get('/api/recipes', function recipeIndex(req, res){
   })
 })
 
+app.get('/api/recipes/:recipeId', controllers.recipes.show);
+
 app.post('/api/ingredients', controllers.ingredients.create);
 app.post('/api/recipes', controllers.recipes.create)
 
 app.put('/api/recipes/:recipeId', controllers.recipes.update)
+app.delete('/api/recipes/:recipeId', controllers.recipes.destroy)
 
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {

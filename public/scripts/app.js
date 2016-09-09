@@ -12,6 +12,7 @@ $(document).ready(function(){
       success: addIngredient
     });
   });
+
   $('#newRecipeForm').on('submit', function(e){
     e.preventDefault();
     var data = {
@@ -33,10 +34,45 @@ $(document).ready(function(){
       success: addRecipe
     });
   });
+
   $('#add-dropdown').on('click', function(e){
     e.preventDefault();
     renderDropdowns(ingredientList);
   });
+
+  $('#recipes').on('click', '.edit', function(e){
+    e.preventDefault();
+    var id = $(this).closest(".recipe").data('recipeId');
+    $('#editRecipesModal').data('recipeId, id');
+    console.log(id);
+    $.ajax({
+      method: 'GET',
+      url: '/api/recipes/' + id,
+      success: function(json){
+        var modalHtml = modTemplate(json);
+        //console.log(modalHtml);
+        $('#editRecipesModalBody').html(modalHtml);
+      }
+    })
+     $('#editRecipesModal').modal();
+  })
+
+  $('#recipes').on('click', '.delete', function(e){
+    e.preventDefault();
+    var id = $(this).closest(".recipe").data('recipeId');
+    console.log("delete ", id);
+    $.ajax({
+      method: 'DELETE',
+      url: '/api/recipes/' + id,
+      success: function(json){
+        $('div[data-recipe-id=' + id + ']').remove();
+      }
+    })
+
+  })
+
+  var modSource = $('#recipe-edit-template').html();
+  var modTemplate = Handlebars.compile(modSource);
 
   var source = $('#ingredients-template').html();
   var template = Handlebars.compile(source);
@@ -62,7 +98,7 @@ $(document).ready(function(){
 
   function handleIngredients(json){
     ingredientList = json;
-    console.log(json);
+    //console.log(json);
     json.forEach(function(ingredient){
       renderIngredient(ingredient);
     });
@@ -70,7 +106,7 @@ $(document).ready(function(){
   }
 
   function handleRecipes(json){
-    console.log(json);
+    //console.log(json);
     json.forEach(function(recipe){
       renderRecipe(recipe);
     })
@@ -78,13 +114,13 @@ $(document).ready(function(){
   }
 
   function renderIngredient(ingredient){
-    console.log(ingredient.name)
+    //console.log(ingredient.name)
 
     var ingredientHtml = template(ingredient);
     $('#ingredients').append(ingredientHtml);
   }
   function renderDropdowns(ingredients){
-    console.log(ingredients);
+    //console.log(ingredients);
     var dropdownHtml = dropTemplate({ingredient: ingredients});
       $('#dropdown-list').append(dropdownHtml);
   }
