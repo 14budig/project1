@@ -86,7 +86,12 @@ $(document).ready(function(){
 
   $('#recipes').on('click', '.description', function(e){
     e.preventDefault();
-    renderRecipeDesc();
+    var id = $(this).closest(".recipe").data('recipeId');
+    $.ajax({
+      method: 'GET',
+      url: '/api/recipes/' + id,
+      success: renderRecipeDesc
+    })
   })
 
   $('#recipes').on('click', '.displayIngredients', function(e){
