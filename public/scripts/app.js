@@ -34,7 +34,7 @@ $(document).ready(function(){
       name: $('#recipe-name').val(),
       description: $('#recipe-desc').val()
     }
-    var metaIngredients = $('.ingredient-dropdown');
+    var metaIngredients = $('#dropdown-list .ingredient-dropdown');
     var ingredients = [];
     for(var i = 0; i < metaIngredients.length; i++){
       ingredients.push($(metaIngredients[i]).val());
