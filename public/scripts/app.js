@@ -86,12 +86,14 @@ $(document).ready(function(){
 
   $('#recipes').on('click', '.description', function(e){
     e.preventDefault();
-    renderRecipeDesc();
+    var id = $(this).closest(".recipe").data('recipeId');
+    renderRecipeDesc(id);
   })
 
   $('#recipes').on('click', '.displayIngredients', function(e){
     e.preventDefault();
-    renderRecipeIng();
+    var id = $(this).closest(".recipe").data('recipeId');
+    renderRecipeIng(id);
   })
 
   $('#editRecipesModalSubmit').on('click', function(e){
@@ -214,14 +216,14 @@ $('#search-recipes').on('submit', function(e){
       $('#recipes').append(recipeHtml);
   }
 
-  function renderRecipeDesc(recipe){
-      $('#panel-ingredients').addClass('hidden');
-      $('#panel-description').removeClass('hidden');
+  function renderRecipeDesc(id){
+      $('.panel-ingredients[data-recipeIng-id=' + id + ']').addClass('hidden');
+      $('.panel-description[data-recipeDesc-id=' + id + ']').removeClass('hidden');
   }
 
-  function renderRecipeIng(recipe){
-      $('#panel-ingredients').removeClass('hidden');
-      $('#panel-description').addClass('hidden');
+  function renderRecipeIng(id){
+    $('.panel-ingredients[data-recipeIng-id=' + id + ']').removeClass('hidden');
+    $('.panel-description[data-recipeDesc-id=' + id + ']').addClass('hidden');
   }
 
   function renderModal(json){
