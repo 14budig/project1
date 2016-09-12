@@ -91,12 +91,12 @@
               <h4>{{name}}</h4>
             </div>
             <div class="panel-body">
-              <ul id="panel-ingredients">
+              <ul class="panel-ingredients" data-recipeIng-id={{_id}}>
               {{#each ingredients}}
                 <li>{{name}}</li>
               {{/each}}
               </ul>
-              <p class="hidden" id="panel-description">
+              <p class="hidden panel-description" data-recipeDesc-id={{_id}}>
               {{description}}
               </p>
             </div>
