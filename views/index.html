@@ -23,9 +23,10 @@
     <header>
       <h1>Booze Bandit</h1>
     </header>
+    <br/>
     <div class="row">
-      <div class="col-sm-4 inglist">
-        <form class="form-inline" id="newIngredientForm">
+      <div class="col-sm-4">
+        <form  id="newIngredientForm">
          <div class="form-group">
            <label for="title">Ingredient Name</label>
            <input type="text" class="form-control" name="name" placeholder="Ingredient Name">
@@ -34,7 +35,7 @@
            <label for="title">Description</label>
            <input type="text" class="form-control" name="description" placeholder="Ingredient Description">
          </div>
-         <button type="submit" class="btn btn-default">Add ingredient</button>
+         <button type="submit" class="btn btn-default">Add Ingredient</button>
         </form>
 
 
@@ -49,12 +50,12 @@
           </ul>
         </div>
       </div>
-      <div class="col-sm-8">
-        <form class="form-inline" id="newRecipeForm">
+      <div class="col-sm-8" id=recipe-section>
+        <form class="" id="newRecipeForm">
           <div id="recipe-name-desc">
            <div class="form-group">
-             <label for="title">Recipe Name</label>
-             <input type="text" id="recipe-name" class="form-control" name="name" placeholder="Recipe Name">
+             <label  for="title">Recipe Name</label>
+             <input  type="text" id="recipe-name" class="form-control" name="name" placeholder="Recipe Name">
            </div>
            <div class="form-group">
              <label for="title">Description</label>
@@ -76,9 +77,10 @@
              </script>
            </div>
          </div>
+
          <button type="submit" class="btn btn-default">Add Recipe</button>
         </form>
-        <form class="form-inline" id="search-recipes">
+        <form class="" id="search-recipes">
           <div class="form-group">
             <label for="title">Search Recipes</label>
             <input type="text" class="form-control" name="name" placeholder="Recipe Name">
@@ -134,7 +136,7 @@
   </div><!-- /.modal -->
 
   <script id="recipe-edit-template" type="text/x-handlebars-template">
-    <form class="form-inline" id="editRecipeForm">
+    <form class="" id="editRecipeForm">
       <div id="modal-recipe-name-desc">
        <div class="form-group">
          <label for="title">Recipe Name</label>

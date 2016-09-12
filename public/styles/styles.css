@@ -28,14 +28,28 @@ h1{
   }
 }
 
-.page{
-  background-color: black;
+body{
+  background-color: #242424;
 }
 label{
-  color: white;
-  font-size: 1.5em;
+  color: #006dcc;
+  font-size;
 }
 
 #ingredients{
   color: white;
+}
+
+#recipes{
+  background-color: #3c3c3c;
+  border-radius: 10px;
+  margin-top: 2em;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding: 1em;
+  border: 1px solid black;
+}
+
+#recipe-section{
+  border-left: 2px solid black;
 }
