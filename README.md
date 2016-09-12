@@ -1,4 +1,4 @@
-# Project 1
+# Booze Bandit
 
 Stores ingredients and recipes using ingredients. 
 
