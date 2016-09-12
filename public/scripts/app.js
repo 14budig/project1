@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
   var ingredientList;
   var modSource = $('#recipe-edit-template').html();
@@ -14,8 +13,6 @@ $(document).ready(function(){
   var dropTemplate = Handlebars.compile(dropSource);
 
   getAllRecipes();
-
-
 
   $('#newIngredientForm').on('submit', function(e){
     e.preventDefault();
@@ -98,12 +95,10 @@ $(document).ready(function(){
 
   $('#editRecipeForm').on('submit', function(e){
     e.preventDefault();
-    // if($('#edit-recipe-name').val()!= "" &&  $('#edit-recipe-desc').val() != ""){
       var data = {
         name: $('#edit-recipe-name').val(),
         description: $('#edit-recipe-desc').val()
       }
-      console.log(data);
       var metaIngredients = $('#editRecipesModal .ingredient-dropdown');
       var ingredients = [];
       for(var i = 0; i < metaIngredients.length; i++){
@@ -117,7 +112,6 @@ $(document).ready(function(){
         data: data,
         success: handleEdit
       });
-    // }
   });
 
 $('.modal-body').on('click','#modal-add-dropdown', function(e){
@@ -138,7 +132,6 @@ $('.modal-body').on('click','#modal-remove-dropdown', function(e){
 $('#search-recipes').on('submit', function(e){
   e.preventDefault();
   var query = $(this).serialize();
-  console.log(query.length);
   if(query.length <= 5){
     $('#recipes').empty();
     getAllRecipes();
@@ -152,14 +145,11 @@ $('#search-recipes').on('submit', function(e){
   }
 });
 
-// ----------------------------------//
   $.ajax({
     method: 'GET',
     url: '/api/ingredients',
     success: handleIngredients
   })
-
-
 
   function getAllRecipes(){
     $.ajax({
@@ -186,7 +176,6 @@ $('#search-recipes').on('submit', function(e){
     else{
       $('#recipes').append('<h2>Sorry, your search returned no results</h2>');
     }
-    // renderRecipe(json);
   }
 
   function renderIngredient(ingredient){
@@ -215,13 +204,13 @@ $('#search-recipes').on('submit', function(e){
   }
 
   function renderRecipe(recipe){
-      var recipeHtml = template2(recipe);
-      $('#recipes').append(recipeHtml);
+    var recipeHtml = template2(recipe);
+    $('#recipes').append(recipeHtml);
   }
 
   function renderRecipeDesc(id){
-      $('.panel-ingredients[data-recipeIng-id=' + id + ']').addClass('hidden');
-      $('.panel-description[data-recipeDesc-id=' + id + ']').removeClass('hidden');
+    $('.panel-ingredients[data-recipeIng-id=' + id + ']').addClass('hidden');
+    $('.panel-description[data-recipeDesc-id=' + id + ']').removeClass('hidden');
   }
 
   function renderRecipeIng(id){
@@ -253,5 +242,4 @@ $('#search-recipes').on('submit', function(e){
     $('#recipes').empty();
     handleRecipes(data);
   }
-
 })
