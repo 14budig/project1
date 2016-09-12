@@ -84,15 +84,20 @@
               <h4>{{name}}</h4>
             </div>
             <div class="panel-body">
-              <ul>
+              <ul id="panel-ingredients">
               {{#each ingredients}}
                 <li>{{name}}</li>
               {{/each}}
               </ul>
+              <p class="hidden" id="panel-description">
+              {{description}}
+              </p>
             </div>
             <div class="panel-footer">
               <button type="button" class="btn btn-default edit">Edit Recipe</button>
               <button type="button" class="btn btn-default delete">Delete Recipe</button>
+              <button type="button" class="btn btn-default description">Description</button>
+              <button type="button" class="btn btn-default displayIngredients">Ingredients</button>
             </div>
           </div>
         </div>

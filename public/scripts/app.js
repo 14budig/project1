@@ -80,7 +80,16 @@ $(document).ready(function(){
         $('div[data-recipe-id=' + id + ']').remove();
       }
     })
+  })
 
+  $('#recipes').on('click', '.description', function(e){
+    e.preventDefault();
+    renderRecipeDesc();
+  })
+
+  $('#recipes').on('click', '.displayIngredients', function(e){
+    e.preventDefault();
+    renderRecipeIng();
   })
 
   $('#editRecipesModalSubmit').on('click', function(e){
@@ -148,10 +157,10 @@ $('.modal-body').on('click','#modal-remove-dropdown', function(e){
   }
 
   function renderIngredient(ingredient){
-
     var ingredientHtml = template(ingredient);
     $('#ingredients').append(ingredientHtml);
   }
+
   function renderDropdowns(ingredients){
     var dropdownHtml = dropTemplate({ingredient: ingredients});
       $('#dropdown-list').append(dropdownHtml);
@@ -175,6 +184,16 @@ $('.modal-body').on('click','#modal-remove-dropdown', function(e){
   function renderRecipe(recipe){
       var recipeHtml = template2(recipe);
       $('#recipes').append(recipeHtml);
+  }
+
+  function renderRecipeDesc(recipe){
+      $('#panel-ingredients').addClass('hidden');
+      $('#panel-description').removeClass('hidden');
+  }
+
+  function renderRecipeIng(recipe){
+      $('#panel-ingredients').removeClass('hidden');
+      $('#panel-description').addClass('hidden');
   }
 
   function renderModal(json){
