@@ -7,3 +7,35 @@
 .dropList{
   width:100%
 }
+
+header{
+  background-image: url("/images/cocktails.jpg");
+  background-size: cover;
+  height: 300px;
+  text-align: center;
+  color: white;
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+h1{
+  font-size: 5em;
+  padding-top: 3em;
+}
+
+@media(max-width: 500px){
+  h1{
+    padding-top: 1em;
+  }
+}
+
+.page{
+  background-color: black;
+}
+label{
+  color: white;
+  font-size: 1.5em;
+}
+
+#ingredients{
+  color: white;
+}
