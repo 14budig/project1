@@ -96,25 +96,28 @@ $(document).ready(function(){
     renderRecipeIng(id);
   })
 
-  $('#editRecipesModalSubmit').on('click', function(e){
+  $('#editRecipeForm').on('submit', function(e){
     e.preventDefault();
-    var data = {
-      name: $('#edit-recipe-name').val(),
-      description: $('#edit-recipe-desc').val()
-    }
-    var metaIngredients = $('#editRecipesModal .ingredient-dropdown');
-    var ingredients = [];
-    for(var i = 0; i < metaIngredients.length; i++){
-      ingredients.push($(metaIngredients[i]).val());
-    }
-    data.ingredients = ingredients;
-    var id = $('#editRecipesModal').data('recipeId');
-    $.ajax({
-      method: 'PUT',
-      url: '/api/recipes/' + id,
-      data: data,
-      success: handleEdit
-    });
+    // if($('#edit-recipe-name').val()!= "" &&  $('#edit-recipe-desc').val() != ""){
+      var data = {
+        name: $('#edit-recipe-name').val(),
+        description: $('#edit-recipe-desc').val()
+      }
+      console.log(data);
+      var metaIngredients = $('#editRecipesModal .ingredient-dropdown');
+      var ingredients = [];
+      for(var i = 0; i < metaIngredients.length; i++){
+        ingredients.push($(metaIngredients[i]).val());
+      }
+      data.ingredients = ingredients;
+      var id = $('#editRecipesModal').data('recipeId');
+      $.ajax({
+        method: 'PUT',
+        url: '/api/recipes/' + id,
+        data: data,
+        success: handleEdit
+      });
+    // }
   });
 
 $('.modal-body').on('click','#modal-add-dropdown', function(e){
