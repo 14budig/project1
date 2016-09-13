@@ -32,6 +32,13 @@ h2{
   }
 }
 
+@media(max-width: 1200px){
+  .my-panel{
+    display: block;
+    margin: 0 auto;
+  }
+}
+
 body{
   background-color: #242424;
 }
@@ -52,6 +59,7 @@ label{
   margin-right: 3px;
   padding: 1em;
   border: 1px solid black;
+
 }
 
 #recipe-section{
