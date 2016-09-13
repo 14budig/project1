@@ -14,26 +14,11 @@ app.get('/', function homepage (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get('/api/ingredients', function ingredientIndex(req, res){
-  db.Ingredient.find({}, function index(err, ingredient){
-    if(err){
-      console.log('index error ' + err);
-    }
-    res.json(ingredient);
-  })
-})
 
-app.get('/api/recipes', function recipeIndex(req, res){
-  db.Recipe.find({}, function index(err, recipe){
-    if(err){
-      console.log('index error ' + err);
-    }
-  })
-  .limit(20).populate('ingredients').exec(function(err, recipes){
-    res.json(recipes);
-  })
-})
 
+app.get('/api/recipes', controllers.recipes.index);
+
+app.get('/api/ingredients', controllers.ingredients.index);
 app.get('/api/recipes/search', controllers.recipes.findAll);
 
 app.get('/api/recipes/:recipeId', controllers.recipes.show);

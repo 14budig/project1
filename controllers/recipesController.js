@@ -21,6 +21,17 @@ function create(req, res){
   });
 }
 
+function index(req, res){
+  db.Recipe.find({}, function index(err, recipe){
+    if(err){
+      console.log('index error ' + err);
+    }
+  })
+  .limit(20).populate('ingredients').exec(function(err, recipes){
+    res.json(recipes);
+  })
+}
+
 function show(req, res){
   db.Recipe.findOne({_id: req.params.recipeId}).populate('ingredients').exec(function(err, recipe){
     if(err) {
@@ -65,6 +76,7 @@ function findAll(req, res){
 }
 
 module.exports = {
+  index: index,
   findAll: findAll,
   create: create,
   update: update,
